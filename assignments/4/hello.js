@@ -1,5 +1,5 @@
 // hello.js
-const greeting = "Luis";
+const greeting = "Luis B";
 
 const createMessage = (name) => {
     return `Hello, ${name}!`;

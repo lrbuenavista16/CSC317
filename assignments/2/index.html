@@ -2,95 +2,127 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Luis Buenavista - Portfolio</title>
+    <link href="styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <header id="top">
-        <h1>Luis Raphael O. Buenavista</h1>
-        <p>Computer Science Student</p>
-        <img src="images/profile_photo.jpg" alt="A picture of me from my high school graduation!" width=175 height=225>
-        <nav>
-            <a href="#about">About Me</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contacts">Contact Information</a>
+    <aside>
+
+        <nav id="table-of-contents">
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Recent Projects</a></li>
+            </ul>
         </nav>
+    </aside>
+
+    <header id="top">
+        <img id="profilePicture" src="images/profile_photo.jpg" alt="A picture of me from my high school graduation!" />
+        <hgroup>
+            <h1>Luis Raphael O. Buenavista</h1>
+            <p>Computer Science Student at San Francisco State University</p>
+        </hgroup>
     </header>
+
     <main>
         <section id="about">
             <h2>About Me</h2>
             <p>Hello! My name is Luis an I am currently a third year college student majoring in Computer
                 Science. I am currently interested in web development and machine and data structures.
-                I look forward to learning all sorts of programming languages and technonlogy!
+                I look forward to learning all of sorts of programming languages and technonlogy!
             </p>
             <p>Outside of programming, my hobbies consist of playing guitar, singing, watching and playing
                 basektball, going on hikes, and playing video games.
             </p>
         </section>
 
+        <h2>Skills</h2>
         <section id="skills">
-            <h2>Skills</h2>
-            <h3>Programming Languages and Markup</h3>
-            <ul>
-                <li>Java</li>
-                <li>Javascript</li>
-                <li>C++</li>
-                <li>Assembly</li>
-                <li>HTML</li>
-                <li>CSS</li>
-            </ul>
+            <section>
+                <h3>Programming Languages and Markup</h3>
+                <ul>
+                    <li>Java</li>
+                    <li>Javascript</li>
+                    <li>C++</li>
+                    <li>Assembly</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                </ul>
+            </section>
 
-            <h3>Soft Skills</h3>
-            <ul>
-                <li>Effective interpersonal communication</li>
-                <li>Adaptability</li>
-                <li>Excellent Time Management</li>
-            </ul>
+            <section>
+                <h3>Soft Skills</h3>
+                <ul>
+                    <li>Effective interpersonal communication</li>
+                    <li>Adaptability</li>
+                    <li>Excellent Time Management</li>
+                </ul>
+            </section>
 
-            <h3>Tools & Technologies</h3>
-            <ul>
-                <li>Git & Github</li>
-                <li>VS Code</li>
-                <li>IntelliJ IDEA</li>
-                <li>Eclipse</li>
-                <li>Discord, Slack, etc.</li>
-                <li>Google Suite</li>
-                <li>Terminal</li>
-            </ul>
+            <section>
+                <h3>Tools & Technologies</h3>
+                <ul>
+                    <li>Git & Github</li>
+                    <li>VS Code</li>
+                    <li>IntelliJ IDEA</li>
+                    <li>Eclipse</li>
+                    <li>Discord, Slack, etc.</li>
+                    <li>Google Suite</li>
+                    <li>Terminal</li>
+                </ul>
+            </section>
         </section>
 
         <section id="projects">
             <h2>Projects</h2>
-            <article>
+
+            <section>
                 <h3>Calculate Library, Spring 2023</h3>
                 <p>One of the first simple projects I worked on in high school.
                     I used the Eclipse IDE and Java to perform super basic arithmetic.
                 </p>
-            </article>
-            <article>
+            </section>
+
+            <section>
                 <h3>Online Portfolio, Fall 2025</h3>
                 <p>This portfolio I built to showcase my skills and projects!
                     I continuously update this website everyday.
                 </p>
-            </article>
-        </section>
-
-        <section id="contacts">
-            <h2>Contact Information</h2>
-            <p>Here are my links to my Github and LinkedIn!<br></p>
-            <ul>
-                <li><a href="https://github.com/lrbuenavista16">Visit my Github!</a></li>
-                <li><a href="https://www.linkedin.com/in/luisbuenavista">Visit my LinkedIn!</a></li>
-            </ul>
+            </section>
         </section>
     </main>
 
-    <footer>
-        <hr>
-        <p>&copy; 2025 Luis Buenavista. Built with HTML.</p>
-        <p><a href="#top">Back to top</a></p>
+    <footer id="contacts">
+        <h2>Contact Information</h2>
+        <p>Get in contact with me via.<br></p>
+
+        <ul>
+            <li>
+                <address>
+                    Email: lrbuenavista16@gmail.com
+                </address>
+            </li>
+            <li>
+                <address>
+                    GitHub: <a href="https://github.com/lrbuenavista16">lrbuenavista16</a>
+                </address>
+            </li>
+            <li>
+                <address>
+                    LinkedIn: <a href="https://www.linkedin.com/in/luisbuenavista">luisbuenavista</a>
+                </address>
+            </li>
+            <li>
+                <address>
+                    Discord: luibton
+                </address>
+            </li>
+        </ul>
     </footer>
+
 </body>
 
 </html>

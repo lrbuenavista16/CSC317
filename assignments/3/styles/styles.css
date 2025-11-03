@@ -1,0 +1,202 @@
+:root {
+  --background-color: hsl(217 33% 17%);
+  --foreground-color: hsl(217, 39%, 31%);
+  --paragraph-width-default: 36rem;
+  --card-width-default: 24rem;
+  --padding-default: 1rem;
+  --margin-default: 1rem;
+  --border-radius-default: 1rem;
+}
+
+body {
+  color: rgb(221, 228, 236);
+  font-family: "Trebuchet MS", sans-serif;
+  background-color: var(--background-color);
+  display: grid;
+  grid-template-areas:
+    "hd      nav"
+    "content nav"
+    "footer  footer";
+  grid-template-columns: auto 10rem;
+  grid-template-rows: auto auto auto;
+
+  margin: 0;
+}
+
+header {
+  grid-area: hd;
+}
+
+aside {
+  grid-area: nav;
+
+  background-color: var(--foreground-color);
+}
+
+aside > nav {
+  position: sticky;
+  top: 0px;
+
+  font-size: large;
+  /* style links */
+  & a:any-link {
+    color: grey;
+    text-decoration: none;
+
+    /* style links when hovering */
+    &:hover {
+      color: white;
+    }
+  }
+
+  & ul#table-of-contents {
+    list-style: none;
+    padding-inline-start: 0;
+    padding: var(--padding-default);
+
+    margin-block: 0;
+  }
+}
+
+/* Update link colors so that they match with the color theme */
+:link {
+  color: #7bbcdd;
+}
+:visited {
+  color: #a3c1e3;
+}
+
+/* Make All project links look like a button */
+.projectLinks > a {
+  box-sizing: content-box;
+  padding: 0.5rem 0.7rem;
+  margin-block: 0.25rem;
+  border-radius: 0.5rem;
+  display: block;
+
+  color: #dec7e2;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+
+  background-color: #5f5887;
+}
+
+main {
+  grid-area: content;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 3rem;
+  padding-right: 5rem;
+}
+
+footer {
+  grid-area: footer;
+  padding-inline: 3rem;
+
+  & ul {
+    list-style: none;
+  }
+}
+
+
+#about {
+  max-width: unset;
+  column-count: 2;
+
+  padding: var(--padding-default);
+
+  background-color: var(--foreground-color);
+  border-radius: var(--border-radius-default);
+
+  & > p {
+    break-inside: avoid;
+  }
+}
+
+#skills {
+  display: grid;
+  grid-template-areas:
+    "pl tt"
+    "ol tt";
+
+  gap: var(--margin-default);
+
+  & > section {
+    padding: var(--padding-default);
+    border-radius: var(--border-radius-default);
+    background-color: var(--foreground-color);
+  }
+}
+
+#pl {
+  grid-area: pl;
+}
+
+#ol {
+  grid-area: ol;
+}
+
+#tt {
+  grid-area: tt;
+}
+
+#projects {
+  display: flex;
+  gap: 1rem 1rem;
+  overflow-x: scroll;
+  scrollbar-color: lightgrey hsl(0 0% 0% / 0);
+}
+
+#projects > section {
+  flex-shrink: 0;
+  flex-basis: var(--card-width-default);
+
+  background-color: var(--foreground-color);
+  border-radius: var(--border-radius-default);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 3rem;
+  padding-right: 5rem;
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+/* animation for profile picture */
+#profilePicture {
+  width: 192px;
+  border-radius: 32px;
+  animation-name: floatAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: ease;
+}
+
+#profilePicture:hover {
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: all ease;
+  scale: 1.1;
+}
+
+@keyframes floatAnimation {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateY(10px);
+  }
+}

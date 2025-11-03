@@ -1,0 +1,107 @@
+/* (AI-generated with text prompt) */
+
+/* Import Orbitron font for LED-style headers */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+/* General page setup */
+body {
+  background-color: #000; /* Deep black for LED contrast */
+  color: #e60000; /* Red glow color for LED look */
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Header section */
+header {
+  padding: 20px;
+  border-bottom: 2px solid #e60000;
+}
+
+/* Rhombus-cropped image effect */
+#profilePicture {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  border: 3px solid #e60000;
+  box-shadow: 0 0 20px #ff0000;
+}
+
+/* Header text */
+h1, h2, h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff0000, 0 0 40px #cc0000;
+  letter-spacing: 2px;
+}
+
+/* Paragraphs */
+p {
+  font-family: 'Times New Roman', Times, serif;
+  color: #f2f2f2;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 10px auto;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  color: #f2f2f2;
+  margin: 5px 0;
+}
+
+/* Links */
+a {
+  color: #e60000;
+  text-decoration: none;
+  text-shadow: 0 0 8px #ff0000;
+}
+
+a:hover {
+  color: #fff;
+  text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+}
+
+/* Sections */
+section {
+  border-top: 1px solid #e60000;
+  margin: 30px 0;
+  padding-top: 20px;
+}
+
+/* Project links */
+.projectLinks {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.projectLinks a {
+  display: inline-block;
+  background-color: #111;
+  padding: 8px 12px;
+  border: 1px solid #e60000;
+  border-radius: 4px;
+  transition: 0.3s ease;
+}
+
+.projectLinks a:hover {
+  background-color: #e60000;
+  color: #000;
+  text-shadow: none;
+}
+
+/* Footer */
+footer {
+  border-top: 2px solid #e60000;
+  padding: 20px;
+  margin-top: 40px;
+}

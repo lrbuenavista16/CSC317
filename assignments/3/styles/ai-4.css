@@ -1,0 +1,407 @@
+/* === Global Styles: Overall Blue Theme === */
+:root {
+  --bg-color: #e6f0ff; /* Main background - light blue */
+  --secondary-bg: #f0f8ff; /* Aside - slightly lighter blue */
+  --footer-bg: #dbeaff; /* A distinct blue for the footer */
+  --card-bg: #ffffff; /* Header & Project cards - white */
+  --text-color: #0a2a4d; /* Dark navy text */
+  --accent-color: #0066cc; /* Link blue */
+  --border-color: #b0c4de; /* Muted blue for borders */
+  --header-padding-v: 2rem;
+  --header-padding-h: 3rem;
+  --sidebar-width: 220px; /* Sidebar width */
+}
+
+/* === Keyframes === */
+/* This defines the fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color); /* Page background is now light blue */
+}
+
+body {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr auto; /* Header, Main, Footer */
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "aside  footer";
+  min-height: 100vh;
+  font-size: 17px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+h2 {
+  font-size: 2rem;
+  border-bottom: 1px solid var(--border-color); /* Blue border */
+  padding-bottom: 0.5rem;
+  margin-top: 2.5rem; /* Increased from 1rem */
+}
+h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+section:first-child h2:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  max-width: 75ch;
+}
+
+a {
+  color: var(--accent-color); /* Blue accent */
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+}
+
+/* === Main Layout Areas === */
+header {
+  grid-area: header;
+  padding: var(--header-padding-v) var(--header-padding-h);
+  border-bottom: 1px solid var(--border-color); /* Blue border */
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background-color: var(--card-bg); /* White header to stand out */
+  
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Header Subtitle Styling */
+header hgroup p {
+  font-size: 1.1rem; /* Slightly smaller */
+  color: #557; /* Muted blue-gray text */
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+main {
+  grid-area: main;
+  padding: 2rem 3rem;
+  
+  animation: fadeIn 0.5s ease-out 0.1s;
+  animation-fill-mode: backwards; /* Ensures it starts invisible */
+}
+
+aside {
+  grid-area: aside;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color); /* Blue border */
+  background-color: var(--secondary-bg); /* Light blue sidebar */
+  padding: 2rem;
+}
+
+footer {
+  grid-area: footer;
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--border-color); /* Blue border */
+  background-color: var(--footer-bg);
+  font-size: 0.9rem;
+  color: #557; /* Muted blue-gray text */
+}
+
+/* === Profile Picture: Circular === */
+#profilePicture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: none;
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#profilePicture:hover {
+  transform: scale(1.05); /* Slight zoom */
+  box-shadow: 0 8px 24px rgba(0, 40, 100, 0.15);
+}
+
+/* === Component Styling === */
+
+/* --- Aside Navigation (Table of Contents) --- */
+#table-of-contents {
+  margin-top: 2rem;
+}
+
+#table-of-contents li {
+  margin-bottom: 0.25rem;
+}
+
+#table-of-contents a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #335; /* Darker blue-gray text */
+  font-weight: 500;
+  
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#table-of-contents a:hover {
+  background-color: #dbeaff; /* Blue hover */
+  text-decoration: none;
+  
+  transform: translateX(4px);
+}
+
+/* --- Skills Section --- */
+#skills {
+  display: grid;
+  /* Creates responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+/* Apply "card" styling to each skill section */
+#skills section {
+  border: 1px solid var(--border-color); /* Blue border */
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  background-color: var(--card-bg); /* White cards */
+  box-shadow: 0 4px 12px rgba(0, 40, 100, 0.05); /* Faint blue shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#skills section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 40, 100, 0.1);
+}
+
+#skills ul {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0.5rem; /* Slight indent for the whole list */
+  margin-top: 1rem; /* Add space below the h3 */
+}
+
+#skills section ul li {
+  position: relative;
+  padding-left: 1.75rem; /* Make room for the custom bullet */
+  margin-bottom: 0.75rem; /* Add vertical spacing */
+  transition: transform 0.2s ease;
+}
+
+#skills section ul li:last-child {
+  margin-bottom: 0; /* Clean up spacing on the last item */
+}
+
+#skills section ul li::before {
+  content: '✓'; /* The custom checkmark bullet */
+  position: absolute;
+  left: 0;
+  top: 1px; /* Align with text */
+  color: var(--accent-color); /* Use your theme's blue */
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#skills section ul li:hover {
+  transform: translateX(3px); /* Add subtle hover indent */
+}
+
+/* --- Projects Section --- */
+#projects {
+  display: grid;
+  grid-template-columns: 1fr; /* Stack projects */
+  gap: 2.5rem;
+}
+
+#projects section {
+  border: 1px solid var(--border-color); /* Blue border */
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  background-color: var(--card-bg); /* White cards */
+  box-shadow: 0 4px 12px rgba(0, 40, 100, 0.05); /* Faint blue shadow */
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Project card hover effect */
+#projects section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 40, 100, 0.1);
+}
+
+/* Styling for project lists */
+#projects section ul {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0.5rem; /* Slight indent for the whole list */
+  margin-top: 0.5rem;
+}
+
+#projects section ul li {
+  position: relative;
+  padding-left: 1.75rem; /* Make room for the custom bullet */
+  margin-bottom: 0.75rem; /* Add vertical spacing */
+  transition: transform 0.2s ease;
+}
+
+#projects section ul li:last-child {
+  margin-bottom: 0; /* Clean up spacing on the last item */
+}
+
+#projects section ul li::before {
+  content: '✓'; /* The custom checkmark bullet */
+  position: absolute;
+  left: 0;
+  top: 1px; /* Align with text */
+  color: var(--accent-color); /* Use your theme's blue */
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#projects section ul li:hover {
+  transform: translateX(3px); /* Add subtle hover indent */
+}
+
+.projectLinks {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.projectLinks a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  background-color: var(--secondary-bg); /* Light blue button */
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.projectLinks a:hover {
+  background-color: #dbeaff; /* Blue hover */
+  text-decoration: none;
+  
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 40, 100, 0.1);
+}
+
+/* --- Footer --- */
+footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Contact Icon Styling */
+footer ul li address {
+  display: flex;
+  align-items: center;
+  font-style: normal; /* Remove default italic a 'address' */
+  font-size: 1rem;
+}
+
+footer ul li address::before {
+  content: '';
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.75rem;
+  vertical-align: middle; 
+  background-color: var(--text-color);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+footer address:has(a[href^="mailto:"])::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-envelope-fill' viewBox='0 0 16 16'%3E%3Cpath d='M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.803V4.697l-5.803 3.558z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-envelope-fill' viewBox='0 0 16 16'%3E%3Cpath d='M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.803V4.697l-5.803 3.558z'/%3E%3C/svg%3E");
+}
+
+footer address:has(a[href*="linkedin.com"])::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-linkedin' viewBox='0 0 16 16'%3E%3Cpath d='M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.705-.52-1.248-1.342-1.248-.822 0-1.359.543-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-linkedin' viewBox='0 0 16 16'%3E%3Cpath d='M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.705-.52-1.248-1.342-1.248-.822 0-1.359.543-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z'/%3E%3C/svg%3E");
+}
+
+footer address:has(a[href*="github.com"])::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-github' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-github' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
+}
+
+footer ul li:last-child address::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-discord' viewBox='0 0 16 16'%3E%3Cpath d='M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.074 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1 .015.019.05.05 0 0 1-.02.066 8.875 8.875 0 0 1-1.248.595.05.05 0 0 0-.01.059.051.051 0 0 0-.018.011c.236.466.51.909.818 1.329a.05.05 0 0 0 .056.019 13.276 13.276 0 0 0 3.995-2.02.05.05 0 0 0 .021-.037c.279-2.985-.42-6.008-1.943-9.123a.041.041 0 0 0-.021-.018zM4.077 10.934c-.43 0-.78-.35-.78-.78s.35-.78.78-.78.78.35.78.78-.35.78-.78.78zm7.846 0c-.43 0-.78-.35-.78-.78s.35-.78.78-.78.78.35.78.78-.35.78-.78.78z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-discord' viewBox='0 0 16 16'%3E%3Cpath d='M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.074 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1 .015.019.05.05 0 0 1-.02.066 8.875 8.875 0 0 1-1.248.595.05.05 0 0 0-.01.059.051.051 0 0 0-.018.011c.236.466.51.909.818 1.329a.05.05 0 0 0 .056.019 13.276 13.276 0 0 0 3.995-2.02.05.05 0 0 0 .021-.037c.279-2.985-.42-6.008-1.943-9.123a.041.041 0 0 0-.021-.018zM4.077 10.934c-.43 0-.78-.35-.78-.78s.35-.78.78-.78.78.35.78.78-.35.78-.78.78zm7.846 0c-.43 0-.78-.35-.78-.78s.35-.78.78-.78.78.35.78.78-.35.78-.78.78z'/%3E%3C/svg%3E");
+}
+
+
+/* === Responsive Design for Mobile === */
+@media (max-width: 860px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "aside"
+      "main"
+      "footer";
+  }
+
+  aside {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+
+  main,
+  footer,
+  aside {
+    padding: 2rem;
+  }
+}

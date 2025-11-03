@@ -1,0 +1,55 @@
+#theme-switcher {
+  position: fixed;
+  z-index: 1;
+  bottom: 1rem;
+  right: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+button.theme-button {
+  backdrop-filter: blur(0.5rem);
+
+	/* Makes the button look like it's popping out */
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: rgb(224, 208, 238);
+  box-shadow: rgb(150, 145, 177) 0 0.4rem;
+
+  font-size: large;
+  font-weight: bold;
+  color: hsl(242, 30%, 33%);
+
+  padding-inline: 1rem;
+
+  transition: background-color 0.3s ease-out;
+
+  &:enabled {
+    background-color: rgb(181, 173, 200);
+  }
+
+  &:hover {
+    background-color: rgb(224, 208, 238);
+    transition: background-color 0.3s ease-out;
+  }
+
+  &:active {
+    background-color: rgb(175, 167, 194);
+
+    box-shadow: rgb(150, 145, 177) 0 0.25rem;
+    translate: 0 0.15rem;
+
+    transition: all 0.1s ease;
+  }
+
+  &:disabled {
+    border-color: rgb(149, 141, 165);
+    background-color: rgb(128, 121, 144);
+    color: hsl(243, 10%, 35%);
+
+    box-shadow: none;
+    translate: 0 0.4rem;
+  }
+}

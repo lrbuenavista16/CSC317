@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // calculator memory
     const calculator = {
         expression: '0',
-        isResult: false, // tracks if display is a calculation result
+        isResult: false,
     };
 
     // updating content displayed on screen
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (key === 'Escape' || key === 'Delete' || key === 'Backspace') {
             action = 'clear';
         } else if (key === '%') {
-            action = 'percentage';
+            action = 'modulo'; content = '%';
         } else {
             return;
         }
@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             action === 'add' ||
             action === 'subtract' ||
             action === 'multiply' ||
-            action === 'divide'
+            action === 'divide' ||
+            action === 'modulo'
         ) {
             handleOperator(content);
         } else if (action === 'decimal') {
@@ -110,8 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resetCalculator();
         } else if (action === 'calculate') {
             handleEquals();
-        } else if (action === 'percentage') {
-            handlePercentage();
         } else if (action === 'toggle-sign') {
             toggleSign();
         }
@@ -119,15 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 0-9 handling
     function inputNumber(number) {
-        // check if the last action was a calculation
         if (calculator.isResult === true) {
-            calculator.expression = number; // replace the expression
-            calculator.isResult = false; // reset flag
+            calculator.expression = number;
+            calculator.isResult = false;
         } else {
             if (calculator.expression === '0') {
                 calculator.expression = number;
             } else {
-                if (calculator.expression.length >= 15) {
+                if (calculator.expression.length >= 25) {
                     return;
                 }
                 calculator.expression += number;
@@ -137,10 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // decimal point handling
     function inputDecimal() {
-        // check if last action was a calculation
         if (calculator.isResult === true) {
-            calculator.expression = '0.'; // start a new number
-            calculator.isResult = false; // reset flag
+            calculator.expression = '0.';
+            calculator.isResult = false;
             return;
         }
 
@@ -148,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
             calculator.expression.lastIndexOf('+'),
             calculator.expression.lastIndexOf('-'),
             calculator.expression.lastIndexOf('×'),
-            calculator.expression.lastIndexOf('÷')
+            calculator.expression.lastIndexOf('÷'),
+            calculator.expression.lastIndexOf('%')
         );
         
         const lastNumber = calculator.expression.slice(lastOperatorIndex + 1);
@@ -158,12 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // operator handling (+, -, ×, ÷)
+    // operator handling (+, -, ×, ÷, %)
     function handleOperator(symbol) {
-        calculator.isResult = false; // new input, so not a result
+        calculator.isResult = false;
         const lastChar = calculator.expression.slice(-1);
         
-        if (['+', '-', '×', '÷'].includes(lastChar)) {
+        if (['+', '-', '×', '÷', '%'].includes(lastChar)) {
             calculator.expression = calculator.expression.slice(0, -1) + symbol;
         } else {
             calculator.expression += symbol;
@@ -192,22 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         calculator.isResult = false;
     }
 
-    // (%) percentage operator handling
-    function handlePercentage() {
-        try {
-            let finalExpression = calculator.expression
-                .replace(/×/g, '*')
-                .replace(/÷/g, '/');
-            
-            const result = eval(finalExpression);
-            calculator.expression = String(result / 100);
-            calculator.isResult = true;
-        } catch (e) {
-            calculator.expression = 'Error';
-            calculator.isResult = true;
-        }
-    }
-
     // (+/-) sign operator handling
     function toggleSign() {
         try {
@@ -223,4 +205,5 @@ document.addEventListener('DOMContentLoaded', () => {
             calculator.isResult = true;
         }
     }
+
 });

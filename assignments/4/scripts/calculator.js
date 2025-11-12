@@ -95,6 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        // check if result is showing AND user typing new number
+        if (calculator.isResult === true && !action) {
+            // inputNumber() will handle reset.
+        } else {
+            // otherwise, check for hard cap
+            const isAtLimit = calculator.expression.length >= 15;
+            
+            const isAddingAction = !action ||
+                                   action === 'decimal' ||
+                                   action === 'add' ||
+                                   action === 'subtract' ||
+                                   action === 'multiply' ||
+                                   action === 'divide' ||
+                                   action === 'modulo';
+
+            // if at limit AND trying to add, block
+            if (isAtLimit && isAddingAction) {
+                return;
+            }
+        }
+        
         if (!action) {
             inputNumber(content);
         } else if (
@@ -125,9 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (calculator.expression === '0') {
                 calculator.expression = number;
             } else {
-                if (calculator.expression.length >= 15) {
-                    return;
-                }
                 calculator.expression += number;
             }
         }
@@ -175,8 +193,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/×/g, '*')
                 .replace(/÷/g, '/');
 
-            const result = eval(finalExpression);
-            calculator.expression = String(result);
+            // result as string
+            let resultString = String(eval(finalExpression));
+
+            if (resultString.length > 15) {
+                resultString = resultString.slice(0, 15);
+                if (resultString.endsWith('.')) {
+                    resultString = resultString.slice(0, -1);
+                }
+            }
+
+            calculator.expression = resultString;
             calculator.isResult = true;
         } catch (e) {
             calculator.expression = 'Error';
@@ -197,13 +224,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/×/g, '*')
                 .replace(/÷/g, '/');
             
-            const result = eval(finalExpression);
-            calculator.expression = String(result * -1);
+            // result as string
+            let resultString = String(eval(finalExpression) * -1);
+
+            if (resultString.length > 15) {
+                resultString = resultString.slice(0, 15);
+                if (resultString.endsWith('.')) {
+                    resultString = resultString.slice(0, -1);
+                }
+            }
+            
+            calculator.expression = resultString;
             calculator.isResult = true;
         } catch (e) {
             calculator.expression = 'Error';
             calculator.isResult = true;
         }
     }
-
 });

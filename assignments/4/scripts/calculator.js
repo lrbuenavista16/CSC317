@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (calculator.expression === '0') {
                 calculator.expression = number;
             } else {
-                if (calculator.expression.length >= 25) {
+                if (calculator.expression.length >= 15) {
                     return;
                 }
                 calculator.expression += number;

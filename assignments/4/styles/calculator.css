@@ -1,13 +1,13 @@
 /* themes and colors */
 :root {
-    --color-bg: #000000;
-    --color-display-bg: #000000;
+    --color-bg: #1a252f;
+    --color-display-bg: #1a252f;
     --color-text: #ffffff;
     --color-button-utility: #a5a5a5;
     --color-button-utility-text: #000;
     --color-button-operator: #66aa00;
     --color-button-operator-text: #ffffff;
-    --color-button-number: #343434;
+    --color-button-number: #2c3e50;
     --color-button-number-text: #ffffff;
 }
 

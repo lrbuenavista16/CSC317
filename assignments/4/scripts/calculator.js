@@ -15,17 +15,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // updating content displayed on screen; 
     function updateDisplay() {
         let value = calculator.displayValue;
-        
-        // checking for errors
-        if (value === 'Infinity' || value === '-Infinity' || value === 'NaN') {
+
+        // error handling
+        if (value === 'Infinity' || value === '-Infinity' || value === 'NaN' || value === 'Error') {
             display.textContent = 'Error';
             calculator.displayValue = 'Error';
+            display.classList.remove('text-small', 'text-xsmall');
+            return;
+        }
+
+        // number formatting
+        const formattedValue = parseFloat(value).toLocaleString('en-US', {
+            maximumFractionDigits: 9,
+            useGrouping: false
+        });
+
+        display.textContent = formattedValue;
+
+        const displayLength = formattedValue.length;
+
+        if (displayLength > 18) {
+            display.classList.add('text-xsmall');
+            display.classList.remove('text-small');
+        } else if (displayLength > 10) {
+            display.classList.add('text-small');
+            display.classList.remove('text-xsmall');
         } else {
-             // limiting dipslay length to prevent overflow
-            display.textContent = parseFloat(value).toLocaleString('en-US', {
-                maximumFractionDigits: 9,
-                useGrouping: false
-            });
+            display.classList.remove('text-small', 'text-xsmall');
         }
     }
 
@@ -53,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let content = key;
 
         if (key >= '0' && key <= '9') {
-            action = null; // It's a number
+            action = null; // it's a number
         } else if (key === '+') {
             action = 'add';
         } else if (key === '-') {
@@ -71,23 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (key === '%') {
             action = 'percentage';
         } else {
-            return; // Exit if the key isn't relevant
+            return; // exit if key isn't relevant
         }
 
-        // Prevent default browser actions (like '/' opening search)
-        event.preventDefault(); 
-        
+        // prevent default browser actions
+        event.preventDefault();
+
         handleInput(action, content);
         updateDisplay();
     });
 
     // main input handling
     function handleInput(action, content) {
-        // if an error is showing, any button press (except AC) resets
+        // if error showing, any button press (except AC) resets
         if (calculator.displayValue === 'Error') {
             if (action !== 'clear') return;
         }
-        
+
         if (!action) {
             inputNumber(content);
         } else if (
@@ -121,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // limiting display value
             if (displayValue.length >= 15) {
-            return;
-        }
-            calculator.displayValue = 
+                return; 
+            }
+            calculator.displayValue =
                 displayValue === '0' ? number : displayValue + number;
         }
     }
@@ -154,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             calculator.firstOperand = inputValue;
         } else if (operator) {
             const result = performCalculation(firstOperand, inputValue, operator);
-            
+
             calculator.displayValue = String(result);
             calculator.firstOperand = result;
         }
@@ -166,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // equals operator handling
     function handleEquals() {
         const { firstOperand, displayValue, operator } = calculator;
-        
+
         if (operator === null || calculator.waitingForSecondOperand) {
             return;
         }
@@ -175,9 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = performCalculation(firstOperand, secondOperand, operator);
 
         calculator.displayValue = String(result);
-        calculator.firstOperand = null; 
+        calculator.firstOperand = null;
         calculator.operator = null;
-        calculator.waitingForSecondOperand = true; 
+        calculator.waitingForSecondOperand = true;
     }
 
     // simple calculations

@@ -45,8 +45,10 @@ body {
     text-align: right;
     width: 100%;
     min-height: 100px;
-    white-space: nowrap;
-    overflow: hidden;
+    font-family: monospace;
+    transition: font-size 0.15s ease-in-out;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 /* grid layout for keys */
@@ -98,4 +100,13 @@ body {
 
 .calculator-keys button:active {
     filter: brightness(0.9);
+}
+
+/* dynamic font size change */
+.calculator-display.text-small {
+    font-size: 2.5rem;
+}
+
+.calculator-display.text-xsmall {
+    font-size: 1.8rem;
 }

@@ -6,34 +6,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // calculator memory
     const calculator = {
-        displayValue: '0',
-        firstOperand: null,
-        waitingForSecondOperand: false,
-        operator: null,
+        expression: '0',
+        isResult: false, // tracks if display is a calculation result
     };
 
-    // updating content displayed on screen; 
+    // updating content displayed on screen
     function updateDisplay() {
-        let value = calculator.displayValue;
+        let value = calculator.expression;
 
         // error handling
-        if (value === 'Infinity' || value === '-Infinity' || value === 'NaN' || value === 'Error') {
-            display.textContent = 'Error';
-            calculator.displayValue = 'Error';
-            display.classList.remove('text-small', 'text-xsmall');
-            return;
+        if (value === 'Infinity' || value === '-Infinity' || value === 'NaN') {
+            value = 'Error';
+            calculator.expression = 'Error';
         }
+        
+        display.textContent = value;
 
-        // number formatting
-        const formattedValue = parseFloat(value).toLocaleString('en-US', {
-            maximumFractionDigits: 9,
-            useGrouping: false
-        });
-
-        display.textContent = formattedValue;
-
-        const displayLength = formattedValue.length;
-
+        // dynamic font sizing
+        const displayLength = value.length;
+        
         if (displayLength > 18) {
             display.classList.add('text-xsmall');
             display.classList.remove('text-small');
@@ -44,42 +35,41 @@ document.addEventListener('DOMContentLoaded', () => {
             display.classList.remove('text-small', 'text-xsmall');
         }
     }
-
-    // running in order for "0" to be displayed on the screen
+    // run once to display 0
     updateDisplay();
 
-    // waiting for user input
+    // waiting for user input (mouse click)
     keys.addEventListener('click', (event) => {
         const { target } = event;
         if (!target.matches('button')) {
             return;
         }
-
         const { action } = target.dataset;
         const buttonContent = target.textContent.trim();
-
+        
         handleInput(action, buttonContent);
         updateDisplay();
     });
 
-    // keyboard
+    // waiting for user input (keyboard)
     window.addEventListener('keydown', (event) => {
         const { key } = event;
         let action = null;
         let content = key;
 
+        // key mapping
         if (key >= '0' && key <= '9') {
-            action = null; // it's a number
+            action = null;
         } else if (key === '+') {
-            action = 'add';
+            action = 'add'; content = '+';
         } else if (key === '-') {
-            action = 'subtract';
+            action = 'subtract'; content = '-';
         } else if (key === '*') {
-            action = 'multiply';
+            action = 'multiply'; content = '×';
         } else if (key === '/') {
-            action = 'divide';
+            action = 'divide'; content = '÷';
         } else if (key === '.') {
-            action = 'decimal';
+            action = 'decimal'; content = '.';
         } else if (key === 'Enter' || key === '=') {
             action = 'calculate';
         } else if (key === 'Escape' || key === 'Delete' || key === 'Backspace') {
@@ -87,23 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (key === '%') {
             action = 'percentage';
         } else {
-            return; // exit if key isn't relevant
+            return;
         }
-
-        // prevent default browser actions
+        
         event.preventDefault();
-
         handleInput(action, content);
         updateDisplay();
     });
 
     // main input handling
     function handleInput(action, content) {
-        // if error showing, any button press (except AC) resets
-        if (calculator.displayValue === 'Error') {
-            if (action !== 'clear') return;
+        // if error, only 'clear' works
+        if (calculator.expression === 'Error') {
+            if (action === 'clear') {
+                resetCalculator();
+            }
+            return;
         }
-
+        
         if (!action) {
             inputNumber(content);
         } else if (
@@ -112,122 +103,124 @@ document.addEventListener('DOMContentLoaded', () => {
             action === 'multiply' ||
             action === 'divide'
         ) {
-            handleOperator(action);
+            handleOperator(content);
         } else if (action === 'decimal') {
             inputDecimal();
         } else if (action === 'clear') {
             resetCalculator();
         } else if (action === 'calculate') {
             handleEquals();
-        } else if (action === 'toggle-sign') {
-            toggleSign();
         } else if (action === 'percentage') {
             handlePercentage();
+        } else if (action === 'toggle-sign') {
+            toggleSign();
         }
     }
 
-    // 0-9 handling 
+    // 0-9 handling
     function inputNumber(number) {
-        const { displayValue, waitingForSecondOperand } = calculator;
-
-        if (waitingForSecondOperand === true) {
-            calculator.displayValue = number;
-            calculator.waitingForSecondOperand = false;
+        // check if the last action was a calculation
+        if (calculator.isResult === true) {
+            calculator.expression = number; // replace the expression
+            calculator.isResult = false; // reset flag
         } else {
-
-            // limiting display value
-            if (displayValue.length >= 15) {
-                return; 
+            if (calculator.expression === '0') {
+                calculator.expression = number;
+            } else {
+                if (calculator.expression.length >= 15) {
+                    return;
+                }
+                calculator.expression += number;
             }
-            calculator.displayValue =
-                displayValue === '0' ? number : displayValue + number;
         }
     }
-
+    
     // decimal point handling
     function inputDecimal() {
-        if (calculator.waitingForSecondOperand) {
-            calculator.displayValue = '0.';
-            calculator.waitingForSecondOperand = false;
+        // check if last action was a calculation
+        if (calculator.isResult === true) {
+            calculator.expression = '0.'; // start a new number
+            calculator.isResult = false; // reset flag
             return;
         }
-        if (!calculator.displayValue.includes('.')) {
-            calculator.displayValue += '.';
+
+        const lastOperatorIndex = Math.max(
+            calculator.expression.lastIndexOf('+'),
+            calculator.expression.lastIndexOf('-'),
+            calculator.expression.lastIndexOf('×'),
+            calculator.expression.lastIndexOf('÷')
+        );
+        
+        const lastNumber = calculator.expression.slice(lastOperatorIndex + 1);
+
+        if (!lastNumber.includes('.')) {
+            calculator.expression += '.';
         }
     }
 
-    // core logic handling
-    function handleOperator(nextOperator) {
-        const { firstOperand, displayValue, operator } = calculator;
-        const inputValue = parseFloat(displayValue);
-
-        if (operator && calculator.waitingForSecondOperand) {
-            calculator.operator = nextOperator;
-            return;
+    // operator handling (+, -, ×, ÷)
+    function handleOperator(symbol) {
+        calculator.isResult = false; // new input, so not a result
+        const lastChar = calculator.expression.slice(-1);
+        
+        if (['+', '-', '×', '÷'].includes(lastChar)) {
+            calculator.expression = calculator.expression.slice(0, -1) + symbol;
+        } else {
+            calculator.expression += symbol;
         }
-
-        if (firstOperand === null) {
-            calculator.firstOperand = inputValue;
-        } else if (operator) {
-            const result = performCalculation(firstOperand, inputValue, operator);
-
-            calculator.displayValue = String(result);
-            calculator.firstOperand = result;
-        }
-
-        calculator.waitingForSecondOperand = true;
-        calculator.operator = nextOperator;
     }
 
     // equals operator handling
     function handleEquals() {
-        const { firstOperand, displayValue, operator } = calculator;
+        try {
+            let finalExpression = calculator.expression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/');
 
-        if (operator === null || calculator.waitingForSecondOperand) {
-            return;
+            const result = eval(finalExpression);
+            calculator.expression = String(result);
+            calculator.isResult = true;
+        } catch (e) {
+            calculator.expression = 'Error';
+            calculator.isResult = true;
         }
-
-        const secondOperand = parseFloat(displayValue);
-        const result = performCalculation(firstOperand, secondOperand, operator);
-
-        calculator.displayValue = String(result);
-        calculator.firstOperand = null;
-        calculator.operator = null;
-        calculator.waitingForSecondOperand = true;
-    }
-
-    // simple calculations
-    function performCalculation(first, second, operator) {
-        if (operator === 'add') {
-            return first + second;
-        }
-        if (operator === 'subtract') {
-            return first - second;
-        }
-        if (operator === 'multiply') {
-            return first * second;
-        }
-        if (operator === 'divide') {
-            return second === 0 ? 'Error' : first / second;
-        }
-        return second;
     }
 
     // AC operator handling
     function resetCalculator() {
-        calculator.displayValue = '0';
-        calculator.firstOperand = null;
-        calculator.waitingForSecondOperand = false;
-        calculator.operator = null;
-    }
-
-    // (+/-) sign operator handling
-    function toggleSign() {
-        calculator.displayValue = String(parseFloat(calculator.displayValue) * -1);
+        calculator.expression = '0';
+        calculator.isResult = false;
     }
 
     // (%) percentage operator handling
     function handlePercentage() {
-        calculator.displayValue = String(parseFloat(calculator.displayValue) / 100);
+        try {
+            let finalExpression = calculator.expression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/');
+            
+            const result = eval(finalExpression);
+            calculator.expression = String(result / 100);
+            calculator.isResult = true;
+        } catch (e) {
+            calculator.expression = 'Error';
+            calculator.isResult = true;
+        }
+    }
+
+    // (+/-) sign operator handling
+    function toggleSign() {
+        try {
+            let finalExpression = calculator.expression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/');
+            
+            const result = eval(finalExpression);
+            calculator.expression = String(result * -1);
+            calculator.isResult = true;
+        } catch (e) {
+            calculator.expression = 'Error';
+            calculator.isResult = true;
+        }
     }
 });

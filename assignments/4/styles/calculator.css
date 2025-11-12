@@ -1,0 +1,101 @@
+/* themes and colors */
+:root {
+    --color-bg: #000000;
+    --color-display-bg: #000000;
+    --color-text: #ffffff;
+    --color-button-utility: #a5a5a5;
+    --color-button-utility-text: #000;
+    --color-button-operator: #66aa00;
+    --color-button-operator-text: #ffffff;
+    --color-button-number: #343434;
+    --color-button-number-text: #ffffff;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* layout */
+.calculator {
+    width: 90vw;
+    max-width: 400px;
+    background-color: var(--color-bg);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* display layout */
+.calculator-display {
+    color: var(--color-text);
+    background-color: var(--color-display-bg);
+    font-size: 3.5rem;
+    font-weight: 300;
+    padding: 30px 20px;
+    text-align: right;
+    width: 100%;
+    min-height: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* grid layout for keys */
+.calculator-keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+/* button styling */
+.calculator-keys button {
+    height: 80px; 
+    
+    border: none;
+    border-radius: 8px; 
+    
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    
+    transition: background-color 0.15s ease;
+}
+
+/* button colors */
+.button-number {
+    background-color: var(--color-button-number);
+    color: var(--color-button-number-text);
+}
+
+.button-operator {
+    background-color: var(--color-button-operator);
+    color: var(--color-button-operator-text);
+}
+
+.button-utility {
+    background-color: var(--color-button-utility);
+    color: var(--color-button-utility-text);
+}
+
+/* "zero" button styling */
+.button-zero {
+    grid-column: span 2;
+}
+
+/* hover effects */
+.calculator-keys button:hover {
+    filter: brightness(1.2);
+}
+
+.calculator-keys button:active {
+    filter: brightness(0.9);
+}
